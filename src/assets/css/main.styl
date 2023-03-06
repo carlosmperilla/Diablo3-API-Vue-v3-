@@ -1,0 +1,245 @@
+// ---------------------
+// Diablo-Like Font · DiabloHeavy Font
+// ---------------------
+
+// Damos de alta la fuente con el nombre 'DiabloHeavy' y cargamos todos los formatos
+@font-face
+  font-family 'DiabloHeavy'
+  src url('../fonts/diabloh.eot')
+  src url('../fonts/diabloh.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/diabloh.otf') format('opentype'),
+  url('../fonts/diabloh.svg') format('svg'),
+  url('../fonts/diabloh.ttf') format('truetype'),
+  url('../fonts/diabloh.woff') format('woff'),
+  url('../fonts/diabloh.woff2') format('woff2')
+  font-style normal
+  font-weight normal
+
+// Creamos una clase que tenga de tipografía la fuente de Diablo
+.font-diablo
+  font-family 'DiabloHeavy', sans-serif
+
+// ---------------------
+// Sprite image · Heroes faces
+// ---------------------
+
+.hero-barbarian,
+.hero-witch-doctor,
+.hero-demon-hunter,
+.hero-wizard,
+.hero-monk,
+.hero-necromancer,
+.hero-crusader
+  background-image: url('../img/heroes-faces.png')
+  background-size 203%
+  width 136px
+  height 106px
+
+.hero-barbarian
+  &.male
+    background-position 0 0
+
+  &.female
+    background-position 100% 0
+
+.hero-witch-doctor
+  &.male
+    background-position 0 16.538462%
+
+  &.female
+    background-position 100% 16.538462%
+
+.hero-demon-hunter
+  &.male
+    background-position 0 33.247754%
+
+  &.female
+    background-position 100% 33.247754%
+
+.hero-wizard
+  &.male
+    background-position 0 50%
+
+  &.female
+    background-position 100% 50%
+
+.hero-monk
+  &.male
+    background-position 0 66.666667%
+
+  &.female
+    background-position 100% 66.666667%
+
+.hero-necromancer
+  &.male
+    background-position 0 83.333333%
+
+  &.female
+    background-position 100% 83.333333%
+
+.hero-crusader
+  &.male
+    background-position 0 100%
+
+  &.female
+    background-position 100% 100%
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px)
+  .hero-barbarian,
+  .hero-witch-doctor,
+  .hero-demon-hunter,
+  .hero-wizard,
+  .hero-monk,
+  .hero-necromancer,
+  .hero-crusader
+    background-size 200%
+    width 100%
+    height 115px
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px)
+  .hero-barbarian,
+  .hero-witch-doctor,
+  .hero-demon-hunter,
+  .hero-wizard,
+  .hero-monk,
+  .hero-necromancer,
+  .hero-crusader
+    height 161px
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px)
+  .hero-barbarian,
+  .hero-witch-doctor,
+  .hero-demon-hunter,
+  .hero-wizard,
+  .hero-monk,
+  .hero-necromancer,
+  .hero-crusader
+    height 143px
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px)
+  .hero-barbarian,
+  .hero-witch-doctor,
+  .hero-demon-hunter,
+  .hero-wizard,
+  .hero-monk,
+  .hero-necromancer,
+  .hero-crusader
+    height 174px
+
+// ---------------------
+// Acts
+// ---------------------
+
+.act
+  background-image: url('../img/progress.png')
+  background-size 500%
+
+  &.act1
+    &.pending
+      background-position -1px 0
+
+    &.done
+      background-position -1px 57px
+
+  &.act2
+    &.pending
+      background-position -51px 0
+
+    &.done
+      background-position -51px -56px
+
+  &.act3
+    &.pending
+      background-position -101px 0px
+
+    &.done
+      background-position -101px -168px
+
+  &.act4
+    &.pending
+      background-position -151px 0px
+
+    &.done
+      background-position -151px -168px
+
+  &.act5
+    &.pending
+      background-position 50px 0
+
+    &.done
+      background-position 50px 57px
+
+// ---------------------
+// Utils
+// ---------------------
+
+.hover-cursor-pointer
+  &:hover
+    cursor pointer
+
+// ---------------------
+// Resources
+// ---------------------
+.resource
+  .resource-icon
+    background-image url('../img/resources.png')
+    width 50px
+    height 50px
+
+    &.resource-mana
+      background-position 0 -50px
+
+    &.resource-fury
+      background-position: -50px 0
+
+    &.resource-hatred-discipline
+      background-position: -100px 0px
+
+    &.resource-spirit
+      background-position: -50px -50px
+
+    &.resource-arcane-power
+      background-position: -100px -50px
+
+    &.resource-wrath
+      background-position: 0px -100px
+
+    &.resource-essence
+      background-position: -50px -100px
+
+// ---------------------
+// Active Skills
+// ---------------------
+.active-skills
+  .skills
+    .slot
+      display block
+      width 22px
+      height 22px
+      background url('../img/skill-overlays.png') 0 0
+      position absolute
+      top -5px
+      left 5px
+
+      &.slot-1
+        background-position: 0 -1px
+
+      &.slot-2
+        background-position: -21px -1px
+
+      &.slot-3
+        background-position: 0 -23px
+
+      &.slot-4
+        background-position: -23px -23px
+
+      &.slot-5
+        background-position: 0 -46px
+
+      &.slot-6
+        background-position: -23px -46px
