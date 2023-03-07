@@ -8,17 +8,14 @@
                 label="Loading..." 
                 :type="type"
                 :variant="variant"
-                />
+            />
         </div>
         <h1 class="my-5">Loading...</h1>
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'Loading',
-        // Propiedades que soporta nuestro componente
-        props: {
+<script setup>
+    const props = defineProps({
             variant: {
                 required: false,
                 type: String,
@@ -47,8 +44,7 @@
                         return ['border', 'grow'].includes(value)
                     }
                 }
-            }
-    }
+            })
 </script>
 
 <style lang="stylus" scoped>
