@@ -41,52 +41,50 @@
   </div>
 </template>
 
-<script>
-    import ItemDetailGem from './ItemDetailGem.vue'
+<script setup>
+  import { computed } from 'vue'
 
-    export default {
-        name: 'ItemDetail',
-        components: {
-            ItemDetailGem,
-        },
-        props: {
-            item: {
-                type: Object || undefined,
-                required: true
-            }
-        },
-        computed: {
-            // Resuelve la URL de la imagen
-            itemUrl () {
-              // const baseUrl = 'http://media.blizzard.com/'
-              // La nueva url tiene certificado SSL (https),
-              // así que el navegador las muestra sin problemas en producción.
-                const baseUrl = 'https://blzmedia-a.akamaihd.net/'
-                const host = `${baseUrl}d3/icons/items/large/`
-                return `${host}${this.item.icon}.png`
-            },
-            // Comprueba si el item tiene gemas
-            itemHasGems () {
-                return Object.prototype.hasOwnProperty.call(this.item, 'gems')
-            },
-            // Si tiene gemas, comprueba si es Gema o Joya
-            // Puede haber varias Gemas. Solo puede haber una Joya. No puede haber joyas y gemas mezcladas
-            gemOrJewel () {
-                return this.item.gems[0].isGem ? 'Gems' : 'Jewel'
-            },
-            // Clase CSS para saber la rareza
-            itemClassColor () {
-                if (Object.prototype.hasOwnProperty.call(this.item, 'displayColor')) {
-                    return `item-${this.item.displayColor}`
-                }
-                // Si no tiene color (es que no hay objeto equipado)
-                return 'item-none'
-            }
-        }
-    }
+  import ItemDetailGem from './ItemDetailGem.vue'
+
+  const props = defineProps({
+      item: {
+          type: Object || undefined,
+          required: true
+      }
+  })
+
+  // Resuelve la URL de la imagen
+  const itemUrl = computed(() => {
+    // const baseUrl = 'http://media.blizzard.com/'
+    // La nueva url tiene certificado SSL (https),
+    // así que el navegador las muestra sin problemas en producción.
+      const baseUrl = 'https://blzmedia-a.akamaihd.net/'
+      const host = `${baseUrl}d3/icons/items/large/`
+      return `${host}${props.item.icon}.png`
+  })
+
+  // Comprueba si el item tiene gemas
+  const itemHasGems = computed(() => {
+      return Object.prototype.hasOwnProperty.call(props.item, 'gems')
+  })
+
+  // Si tiene gemas, comprueba si es Gema o Joya
+  // Puede haber varias Gemas. Solo puede haber una Joya. No puede haber joyas y gemas mezcladas
+  const gemOrJewel = computed(() => {
+      return props.item.gems[0].isGem ? 'Gems' : 'Jewel'
+  })
+
+  // Clase CSS para saber la rareza
+  const itemClassColor = computed(() => {
+      if (Object.prototype.hasOwnProperty.call(props.item, 'displayColor')) {
+          return `item-${props.item.displayColor}`
+      }
+      // Si no tiene color (es que no hay objeto equipado)
+      return 'item-none'
+  })
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
 .d3-icon-item
   min-height 100px
   // El borde de la caja va determinar la rareza del objeto, segun el color que tenga

@@ -12,19 +12,16 @@
   </ul>
 </template>
 
-<script>
-    export default {
-        name: 'AttributeList',
-        props: {
-            attributes: {
-                type: Array,
-                required: true
-            }
-        }
-    }
+<script setup>
+  const props = defineProps({
+      attributes: {
+          type: Array,
+          required: true
+      }
+  })
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
   ul
     li
       .name-text

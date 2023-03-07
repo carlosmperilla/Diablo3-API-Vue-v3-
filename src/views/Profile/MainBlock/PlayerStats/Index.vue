@@ -26,37 +26,31 @@
     </div>
 </template>
 
-<script>
-    import heroName from '@/mixins/heroName'
+<script setup>
+    import { computed } from 'vue'
+
     import { HeroData } from '@/utils/typeValidation'
+    import classToName from '@/reusable/heroName.js'
+
     import SingleStat from './SingleStat.vue'
     import TimePlayed from './TimePlayed.vue'
 
-    export default {
-        name: 'PlayerStats',
-        mixins: [heroName],
-        components: {
-            TimePlayed,
-            SingleStat
-        },
-        props: {
-            stats: {
+    const props = defineProps({
+        stats: {
             required: true,
             type: Object
-            }
-        },
-        computed: {
-            timePlayed () {
-                return Object.keys(this.stats.timePlayed)
-                    .sort()
-                    .map(hero => {
-                        return new HeroData(
-                            this.classToName(hero),
-                            this.stats.timePlayed[hero],
-                            hero
-                        )
-                    })
-            }
         }
-    }
+    })
+
+    const timePlayed = computed(() => {
+        return Object.keys(props.stats.timePlayed)
+            .sort()
+            .map(hero => {
+                return new HeroData(
+                    classToName(hero),
+                    props.stats.timePlayed[hero],
+                    hero
+                )
+            })
+    })
 </script>

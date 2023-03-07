@@ -26,41 +26,33 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { reactive } from 'vue'
+
     import HeroIco from './HeroIco.vue'
     import HeroClassLevel from './HeroClassLevel.vue'
 
-    export default {
-        name: 'HeroesList',
-        components: {
-            HeroIco,
-            HeroClassLevel,
-        },
-        props: {
+    const props = defineProps({
             heroes: {
                 required: true,
                 type: Array
             }
+        })
+
+    const fields = reactive([
+        {
+            key: 'name',
+            label: 'Name',
         },
-        data () {
-            return {
-                fields: [
-                    {
-                        key: 'name',
-                        label: 'Name',
-                    },
-                    {
-                        key: 'class',
-                        label: 'Class',
-                        sortable: true
-                    },
-                    {
-                        key: 'kills',
-                        label: 'Elite Kills',
-                        sortable: true
-                    }
-                ]
-            }
+        {
+            key: 'class',
+            label: 'Class',
+            sortable: true
         },
-    }
+        {
+            key: 'kills',
+            label: 'Elite Kills',
+            sortable: true
+        }
+    ])
 </script>

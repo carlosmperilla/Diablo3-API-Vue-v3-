@@ -45,6 +45,9 @@
 </template>
 
 <script>
+    // Pendiente Composition API
+    // Problablemente sea mejor hacerlo despues de 
+    // pasar de Vuex a Pinia
     import { mapState } from 'vuex'
     import setError from '@/mixins/setError'
 

@@ -75,72 +75,69 @@
 
 </template>
 
-<script>
-    import ItemDetail from './ItemDetail.vue'
+<script setup>
+  import { computed } from 'vue'
 
-    // Objeto con las keys de los 'items' del personaje
-    const defaultItems = {
-        head: {
-            slotName: 'head'
-        },
-        shoulders: {
-            slotName: 'Shoulders'
-        },
-        torso: {
-            slotName: 'Torso'
-        },
-        neck: {
-            slotName: 'Neck'
-        },
-        hands: {
-            slotName: 'Hands'
-        },
-        waist: {
-            slotName: 'Waist'
-        },
-        bracers: {
-            slotName: 'Bracers'
-        },
-        leftFinger: {
-            slotName: 'Left Finger'
-        },
-        legs: {
-            slotName: 'Legs'
-        },
-        rightFinger: {
-            slotName: 'Right Finger'
-        },
-        mainHand: {
-            slotName: 'Main Hand'
-        },
-        feet: {
-            slotName: 'Feet'
-        },
-        offHand: {
-            slotName: 'Off Hand'
-        }
-    }
+  import ItemDetail from './ItemDetail.vue'
 
-    export default {
-        name: 'HeroItems',
-        components: { ItemDetail },
-        props: {
-            items: {
-                type: Object,
-                required: true
-            }
-        },
-        computed: {
-            itemsData () {
-                // Fusionar objetos:
-                // Esto lo hacemos para mostrar el hueco vacío en caso de que ese objeto no esté equipado
-                // Si NO hay item equipado, manda el valor de 'defaultItems' correspondiente
-                // Si hay item equipado, manda la info del item
-                return {
-                    ...defaultItems,
-                    ...this.items
-                }
-            }
-        }
-    }
+  // Objeto con las keys de los 'items' del personaje
+  const defaultItems = {
+      head: {
+          slotName: 'head'
+      },
+      shoulders: {
+          slotName: 'Shoulders'
+      },
+      torso: {
+          slotName: 'Torso'
+      },
+      neck: {
+          slotName: 'Neck'
+      },
+      hands: {
+          slotName: 'Hands'
+      },
+      waist: {
+          slotName: 'Waist'
+      },
+      bracers: {
+          slotName: 'Bracers'
+      },
+      leftFinger: {
+          slotName: 'Left Finger'
+      },
+      legs: {
+          slotName: 'Legs'
+      },
+      rightFinger: {
+          slotName: 'Right Finger'
+      },
+      mainHand: {
+          slotName: 'Main Hand'
+      },
+      feet: {
+          slotName: 'Feet'
+      },
+      offHand: {
+          slotName: 'Off Hand'
+      }
+  }
+
+  const props = defineProps({
+      items: {
+          type: Object,
+          required: true
+      }
+  })
+
+  const itemsData = computed(() => {
+      // Fusionar objetos:
+      // Esto lo hacemos para mostrar el hueco vacío en caso de que ese objeto no esté equipado
+      // Si NO hay item equipado, manda el valor de 'defaultItems' correspondiente
+      // Si hay item equipado, manda la info del item
+      return {
+          ...defaultItems,
+          ...props.items
+      }
+  })
 </script>

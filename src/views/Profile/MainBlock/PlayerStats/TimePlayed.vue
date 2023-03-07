@@ -10,17 +10,13 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import TimePlayedHero from './TimePlayedHero.vue'
 
-    export default {
-        name: 'TimePlayed',
-        components: { TimePlayedHero },
-        props: {
-            timePlayed: {
+    const props = defineProps({
+        timePlayed: {
             required: true,
             type: Array
-            }
         }
-    }
+    })
 </script>

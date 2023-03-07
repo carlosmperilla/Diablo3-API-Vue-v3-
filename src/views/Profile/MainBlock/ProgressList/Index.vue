@@ -11,33 +11,31 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { computed } from 'vue'
+
     import ProgressItem from './ProgressItem.vue'
 
-    export default {
-        name: 'ProgressBosses',
-        components: { ProgressItem },
-        props: {
-            acts: {
+    const props = defineProps({
+        acts: {
             required: true,
             type: Object
-            }
-        },
-        computed: {
-            /**
-             * Order acts from 1 to 5
-             * @returns {Object} Ordered acts
-             */
-            sortedActs () {
-            return Object.keys(this.acts)
-                .sort()
-                .reduce((a, c) => {
-                a[c] = this.acts[c]
-                return a
-                }, {})
-            }
         }
-    }
+    })
+
+    /**
+     * Order acts from 1 to 5
+     * @returns {Object} Ordered acts
+     */
+    const sortedActs = computed(() => {
+        return Object.keys(props.acts)
+            .sort()
+            .reduce((a, c) => {
+                a[c] = props.acts[c]
+                return a
+            }, {})
+    })
+
 </script>
 
 <style lang="stylus">

@@ -11,17 +11,13 @@
   </div>
 </template>
 
-<script>
-    import PassiveSkill from './PassiveSkill.vue'
+<script setup>
+  import PassiveSkill from './PassiveSkill.vue'
 
-    export default {
-        name: 'PassiveSkills',
-        components: { PassiveSkill },
-        props: {
-            skills: {
-                type: Array,
-                required: true
-            }
-        }
-    }
+  const props = defineProps({
+      skills: {
+          type: Array,
+          required: true
+      }
+  })
 </script>

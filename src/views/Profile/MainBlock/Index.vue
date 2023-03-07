@@ -11,51 +11,47 @@
     </div>
 </template>
 
-<script>
-    // Importamos
+<script setup>
+    import { computed } from 'vue'
+
     import TopHeroes from './TopHeroes/Index.vue'
     import HeroesList from './HeroesList/Index.vue'
     import ProgressList from './ProgressList/Index.vue'
     import PlayerStats from './PlayerStats/Index.vue'
 
-    export default {
-        name: 'MainBlock',
-        components: {
-            TopHeroes,
-            HeroesList,
-            ProgressList,
-            PlayerStats,
-        },
-        props: {
+
+    const props = defineProps({
             profileData: {
             type: Object,
             required: true
             }
-        },
-        computed: {
-            // Comprobamos que hay héroes
-            hasHeroes () {
-                return this.profileData.heroes.length > 0
-            },
-            // Devolvemos los 3 primeros
-            topHeroes () {
-                return this.profileData.heroes.slice(0, 3)
-            },
-            hasHeroesList () {
-                return this.profileData.heroes.length > 3
-            },
-            heroesList () {
-                return this.profileData.heroes.slice(3, this.profileData.heroes.length)
-            },
-            statsData () {
-                const { paragonLevel, kills, timePlayed } = this.profileData
+        })
+
+    // Comprobamos que hay héroes
+    const hasHeroes = computed(() => {
+                return props.profileData.heroes.length > 0
+        })
+
+    // Devolvemos los 3 primeros
+    const topHeroes = computed(() => {
+            return props.profileData.heroes.slice(0, 3)
+        })
+
+    const hasHeroesList = computed(() => {
+                return props.profileData.heroes.length > 3
+        })
+
+    const heroesList = computed(() => {
+                return props.profileData.heroes.slice(3, props.profileData.heroes.length)
+        })
+
+    const statsData = computed(() => {
+                const { paragonLevel, kills, timePlayed } = props.profileData
                 return { paragonLevel, kills, timePlayed }
-            }
-        }
-    }
+        })
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     .grid-container
         display grid
         grid-template-columns 1fr
@@ -78,12 +74,4 @@
 
         &.item-right
             grid-column span 2
-
-   /*
-  .grid-item
-        &.item-left
-            grid-column span 4
-
-        &.item-right
-            grid-column span 2 */
 </style>

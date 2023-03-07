@@ -20,7 +20,7 @@
       <h2 class='mb-4'>API Rate Limit</h2>
       <b-alert show variant='dark'>
         Clients exceeding these limits may experience slower service or a response error. See the
-        <a href='https://develop.battle.net/documentation/guides/getting-started'>Getting Started Guide</a> for more details.
+        <a :href='guideBattleNet'>Getting Started Guide</a> for more details.
       </b-alert>
 
       <dl class='row mt-5 text-center text-sm-left'>
@@ -50,7 +50,7 @@
       </ol>
 
       <p class='text-break'>Read more here:
-        <a href='https://develop.battle.net/documentation/guides/getting-started'>https://develop.battle.net/documentation/guides/getting-started</a>
+        <a :href='guideBattleNet'>{{ guideBattleNet }}</a>
       </p>
     </div>
 
@@ -59,8 +59,6 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'AboutView'
-  }
+<script setup>
+  const guideBattleNet = 'https://develop.battle.net/documentation/guides/getting-started'
 </script>

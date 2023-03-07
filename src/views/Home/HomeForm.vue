@@ -30,7 +30,7 @@
                     id="input-region"
                     v-model="form.region"
                     size="lg"
-                    :options="regions"
+                    :options="getRegions"
                     required
                 />
             </b-form-group>
@@ -47,7 +47,7 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
     import { regions } from '@/utils/regions'
 
     export default {
@@ -71,5 +71,32 @@
         this.$router.push({ name: 'Profile', params: { region, battleTag: battleTag.replace('#', '-') } })
         }
     }
+    }
+</script> -->
+
+<script setup>
+    import { reactive, computed } from 'vue';
+    import { useRouter } from 'vue-router'
+    import { regions } from '@/utils/regions'
+
+    const router = useRouter()
+    const form = reactive({
+            battleTag: '',
+            region: 'eu'
+        })
+        
+    const getRegions = computed(() => {
+        return regions.map(region => ({ value: region, text: region.toUpperCase() }))
+    })
+
+    function onSubmit () {
+        const { region, battleTag } = form
+        router.push({ 
+            name: 'Profile', 
+            params: { 
+                region, 
+                battleTag: battleTag.replace('#', '-') 
+            } 
+        })
     }
 </script>

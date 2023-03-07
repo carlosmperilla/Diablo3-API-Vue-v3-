@@ -9,14 +9,14 @@
 
       <!-- Atributos Principales-->
       <div class='core'>
-        <HeroAttributeList :attributes='coreAttributes'/>
+        <HeroAttributeList :attributes='getCoreAttributes'/>
       </div>
 
       <hr>
 
       <!-- Atributos Secundarios-->
       <div class='secondary'>
-        <HeroAttributeList :attributes='secondaryAttributes'/>
+        <HeroAttributeList :attributes='getSecondaryAttributes'/>
       </div>
 
     </div>
@@ -25,13 +25,13 @@
 
     <!-- Recursos -->
     <div class='resources'>
-      <HeroResources :resources='resources'/>
+      <HeroResources :resources='getResources'/>
     </div>
 
   </div>
 </template>
 
-<script>
+<!-- <script>
     // Importamos los componentes
     import HeroAttributeList from './HeroAttributeList.vue'
     import HeroResources from './HeroResources.vue'
@@ -80,4 +80,51 @@
             }
         }
     }
+</script> -->
+
+<script setup>
+  import { computed } from 'vue'
+
+  // Importamos los componentes
+  import HeroAttributeList from './HeroAttributeList.vue'
+  import HeroResources from './HeroResources.vue'
+
+  // Definimos:
+  // Los atributos principales
+  const coreAttributes = ['strength', 'dexterity', 'vitality', 'intelligence']
+  // Los atributos secundarios
+  const secondaryAttributes = ['damage', 'toughness', 'healing']
+  // Los recursos
+  const resources = ['life', 'primaryResource', 'secondaryResource']
+
+  // Definimos la propiedad
+  const props = defineProps({
+      attributes: {
+          type: Object,
+          required: true
+      }
+  })
+
+  // Creamos el objeto de atributos principales
+  const getCoreAttributes = computed(() => {
+      return coreAttributes.map(item => ({ name: item, val: props.attributes[item] }))
+  })
+
+  // Creamos el objeto de atributos principales
+  const getSecondaryAttributes = computed(() => {
+      return secondaryAttributes.map(item => ({ name: item, val: props.attributes[item] }))
+  })
+
+  const getResources = computed(() => {
+      // Creamos el objeto de recursos 
+      // Agregamos el tipo de personaje `classSlug` (necesario para los Sprites CSS)
+      const data = {
+          classSlug: props.attributes.classSlug,
+          resources: {}
+      }
+      resources.forEach(item => {
+          data.resources[item] = { name: item, val: props.attributes[item] }
+      })
+      return data
+  })
 </script>

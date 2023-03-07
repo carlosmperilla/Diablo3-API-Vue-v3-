@@ -26,6 +26,10 @@
 </template>
   
 <script>
+    // Pendiente Composition API
+    // Problablemente sea mejor hacerlo despues de 
+    // pasar de Vuex a Pinia
+    // setError
     import setError from '@/mixins/setError'
     import { getApiHero, getApiDetailedHeroItems } from '@/api/search'
     

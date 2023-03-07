@@ -25,16 +25,13 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'ArtisanItem',
-        props: {
+<script setup>
+    const props = defineProps({
             artisan: {
                 required: true,
                 type: Object
             }
-        }
-    }
+        })
 </script>
 
 <style lang="stylus" scoped>

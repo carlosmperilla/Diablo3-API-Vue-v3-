@@ -27,28 +27,26 @@
     </div>
 </template>
 
-<script>
-    import goToHero from '@/mixins/goToHero'
+<script setup>
+    import { computed } from 'vue'
 
-    export default {
-        name: 'TopHero',
-        mixins: [goToHero],
-        props: {
+    import handlerGoToHero from '@/reusable/goToHero'
+    const goToHero = handlerGoToHero();
+
+    const props = defineProps({
             hero: {
-            type: Object,
-            required: true
+                type: Object,
+                required: true
             }
-        },
-        computed: {
-            heroClass () {
-                const gender = this.hero.gender === 0 ? 'male' : 'female'
-                return `hero-${this.hero.classSlug} ${gender}`
-            }
-        }
-    }
+        })
+
+    const heroClass = computed(() => {
+            const gender = props.hero.gender === 0 ? 'male' : 'female'
+            return `hero-${props.hero.classSlug} ${gender}`
+        })
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     .hero-portrait-wrapper
         .title-name
             color white

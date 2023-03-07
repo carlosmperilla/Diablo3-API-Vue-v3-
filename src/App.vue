@@ -6,11 +6,13 @@
     </LoadLayout>
 
     <MainLayout v-else/>
-
   </div>
 </template>
 
 <script>
+  // Pendiente Composition API
+  // Problablemente sea mejor hacerlo despues de 
+  // pasar de Vuex a Pinia
   import { mapState }  from 'vuex'
 
   import LoadLayout from './layouts/LoadLayout.vue'
@@ -31,7 +33,6 @@
       })
     }
   }
-
 </script>
 
 <style lang="stylus">

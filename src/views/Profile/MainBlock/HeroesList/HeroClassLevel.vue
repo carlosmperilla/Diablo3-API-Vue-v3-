@@ -6,19 +6,14 @@
     </div>
 </template>
 
-<script>
-// Traemos el mixin
-import heroName from '@/mixins/heroName.js'
+<script setup>
+  // Reemplazamos el mixin
+  import classToName from '@/reusable/heroName.js'
 
-export default {
-  name: 'HeroNameLevel',
-  // Lo damos de alta
-  mixins: [heroName],
-  props: {
-    hero: {
-      required: true,
-      type: Object
-    }
-  }
-}
+  const props = defineProps({
+      hero: {
+        required: true,
+        type: Object
+      }
+    })
 </script>

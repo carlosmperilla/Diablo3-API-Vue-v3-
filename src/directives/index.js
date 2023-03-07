@@ -6,10 +6,10 @@ import Vue from 'vue'
 // Registra una directiva global llamada `v-focus`
   Vue.directive('focus', {
     /**
-   * inserted hook: Cuando el elemento es insertado en el DOM
+   * mounted hook: Cuando el elemento es insertado en el DOM
    * @param el {HTMLElement} El elemento al que está dirigida la directiva
    */
-  inserted: function (el) {
+  mounted: function (el) {
     // Enfoca el elemento
     el.focus()
   }
@@ -20,7 +20,7 @@ import Vue from 'vue'
      * @param el {HTMLElement} Elemento al que aplica la directiva
      * @param binding {DirectiveBinding} Datos que recibe la directiva a traves de argumentos, modificadores, etc
      */
-    bind (el, binding) {
+    beforeMount (el, binding) {
       // Definimos los colores
       const color = {
         bone: '#e8dcc2',

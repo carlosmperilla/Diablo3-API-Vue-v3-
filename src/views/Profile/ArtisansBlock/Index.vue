@@ -10,47 +10,44 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { computed } from 'vue'
+
     import ArtisanItem from './ArtisanItem.vue'
 
-    export default {
-        name: 'ArtisansBlock',
-        components: { ArtisanItem },
-        props: {
-            artisansData: {
+    const props = defineProps({
+        artisansData: {
                 type: Object,
                 required: true
-            }
-        },
-        computed: {
-            artisansInfo () {
+        }
+    })
+
+    const artisansInfo = computed( () => {
                 return [
                     {
                         name: 'blacksmith',
                         icon: 'hammer',
                         emoji: '⚒',
                         color: '#ffb74d',
-                        normal: this.artisansData.blacksmith,
-                        hardcore: this.artisansData.blacksmithHardcore
+                        normal: props.artisansData.blacksmith,
+                        hardcore: props.artisansData.blacksmithHardcore
                     },
                     {
                         name: 'jeweler',
                         icon: 'gem',
                         emoji: '💎',
                         color: '#4dd0e1',
-                        normal: this.artisansData.jeweler,
-                        hardcore: this.artisansData.jewelerHardcore
+                        normal: props.artisansData.jeweler,
+                        hardcore: props.artisansData.jewelerHardcore
                     },
                     {
                         name: 'mystic',
                         icon: 'hat-wizard',
                         emoji: '🔮',
                         color: '#ba68c8',
-                        normal: this.artisansData.mystic,
-                        hardcore: this.artisansData.mysticHardcore
+                        normal: props.artisansData.mystic,
+                        hardcore: props.artisansData.mysticHardcore
                     }
                 ]
-            }
-        }
-    }
+            })
 </script>

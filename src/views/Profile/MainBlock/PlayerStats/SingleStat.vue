@@ -19,10 +19,8 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'SingleStat',
-        props: {
+<script setup>
+    const props = defineProps({
             icoName: {
                 required: true,
                 type: String
@@ -35,8 +33,7 @@
                 required: true,
                 type: Object
             }
-        }
-    }
+        })
 </script>
 
 <style lang="stylus" scoped>

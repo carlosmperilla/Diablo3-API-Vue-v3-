@@ -13,17 +13,13 @@
   </div>
 </template>
 
-<script>
-    import ActiveSkill from './ActiveSkill.vue'
+<script setup>
+  import ActiveSkill from './ActiveSkill.vue'
 
-    export default {
-        name: 'ActiveSkills',
-        components: { ActiveSkill },
-        props: {
-            skills: {
-                type: Array,
-                required: true
-            }
-        }
-    }
+  const props = defineProps({
+      skills: {
+          type: Array,
+          required: true
+      }
+  })
 </script>

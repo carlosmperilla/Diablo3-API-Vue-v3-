@@ -45,25 +45,22 @@
   </b-row>
 </template>
 
-<script>
-    import heroName from '@/mixins/heroName'
+<script setup>
+  import { computed } from 'vue'
 
-    export default {
-        name: 'HeroDetailHeader',
-        mixins: [heroName],
-        props: {
-            detail: {
-                type: Object,
-                required: true
-            }
-        },
-        computed: {
-            heroClass () {
-                const gender = this.detail.gender === 0 ? 'male' : 'female'
-                return `hero-${this.detail.classSlug} ${gender}`
-            }
-        }
-    }
+  import classToName from '@/reusable/heroName.js'
+
+  const props = defineProps({
+          detail: {
+              type: Object,
+              required: true
+          }
+      })
+
+  const heroClass = computed(() => {
+          const gender = props.detail.gender === 0 ? 'male' : 'female'
+          return `hero-${props.detail.classSlug} ${gender}`
+      })
 </script>
 
 <style lang="stylus" scoped>

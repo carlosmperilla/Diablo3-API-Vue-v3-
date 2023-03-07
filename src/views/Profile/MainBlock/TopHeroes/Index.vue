@@ -13,19 +13,13 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import TopHero from './TopHero.vue'
 
-    export default {
-        name: 'TopHeroes',
-        components: {
-            TopHero,
-        },
-        props: {
+    const props = defineProps({
             heroes: {
                 required: true,
                 type: Array
             }
-        }
-    }
+        })
 </script>

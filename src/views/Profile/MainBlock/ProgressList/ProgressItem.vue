@@ -7,7 +7,9 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { computed } from 'vue'
+
     const acts = {
         act1: 'I',
         act2: 'II',
@@ -16,30 +18,29 @@
         act5: 'V'
     }
 
-    export default {
-        name: 'ProgressItem',
-        props: {
-            act: {
+    const props = defineProps({
+        act: {
             required: true,
             type: Object,
             validator: (obj) => {
                 return Object.keys(obj).length === 2
             }
-            }
-        },
-        computed: {
-            fullActName () {
-            return `Act ${acts[this.act.actNum]}`
-            },
-            actClass () {
-            const status = this.act.value ? 'done' : 'pending'
-            return `${this.act.actNum} ${status}`
-            },
-            actTitle () {
-            return this.act.value
+        }
+    })
+
+
+    const fullActName = computed(() => {
+            return `Act ${acts[props.act.actNum]}`
+        })
+            
+    const actClass = computed(() => {
+            const status = props.act.value ? 'done' : 'pending'
+            return `${props.act.actNum} ${status}`
+        })
+
+    const actTitle = computed(() => {
+            return props.act.value
                 ? 'Act completed! 💃'
                 : 'Act uncompleted 🙈'
-            }
-        }
-    }
+        })
 </script>

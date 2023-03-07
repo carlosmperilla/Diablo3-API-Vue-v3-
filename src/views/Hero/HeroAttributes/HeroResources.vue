@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
     import resources from '@/mixins/resources'
 
     export default {
@@ -69,9 +69,35 @@
             }
         }
     }
+</script> -->
+
+<script setup>
+  import { computed } from 'vue'
+
+  import { getResourceClassName, getResourceDisplayName } from '@/reusable/resources.js'
+
+  const props = defineProps({
+      resources: {
+          required: true,
+          type: Object
+      }
+  })
+
+  const classResourceName = computed(() => {
+      return `resource-${getResourceClassName(props.resources.classSlug)}`
+  })
+
+  const displayResourceName = computed(() => {
+      return getResourceDisplayName(props.resources.classSlug)
+  })
+
+  // Solo demon-hunter tiene recurso secundario
+  const hasSecondaryResource = computed(() => {
+      return props.resources.classSlug === 'demon-hunter'
+  })
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
   .resource
     .name-text
       color #efb45d

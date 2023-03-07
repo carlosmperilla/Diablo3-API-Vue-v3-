@@ -14,24 +14,22 @@
     </div>
 </template>
 
-<script>
+<script setup>
+    import { computed } from 'vue'
+
     // Custom validator
     import { HeroData } from '@/utils/typeValidation'
 
-    export default {
-        name: 'TimePlayedHero',
-        props: {
-            heroTime: {
-                type: HeroData,
-                required: true
-            }
-        },
-        computed: {
-            classHeroBg () {
-                return `hero-bg-color-${this.heroTime.classSlug}`
-            }
+    const props = defineProps({
+        heroTime: {
+            type: HeroData,
+            required: true
         }
-    }
+    })
+
+    const classHeroBg = computed(() => {
+        return `hero-bg-color-${props.heroTime.classSlug}`
+    })
 </script>
 
 <style lang="stylus" scoped>

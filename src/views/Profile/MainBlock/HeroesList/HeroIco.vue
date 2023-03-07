@@ -8,29 +8,27 @@
     </div>
 </template>
 
-<script>
-    import goToHero from '@/mixins/goToHero'
+<script setup>
+    import { computed } from 'vue'
 
-    export default {
-        name: 'HeroIco',
-        mixins: [goToHero],
-        props: {
+    import handlerGoToHero from '@/reusable/goToHero'
+    const goToHero = handlerGoToHero();
+
+    const props = defineProps({
             hero: {
-            required: true,
-            type: Object
+                required: true,
+                type: Object
             }
-    },
-        computed: {
-            heroClassImg () {
-                const gender = this.hero.gender === 1 ? 'female' : 'male'
-                const hardcore = this.hero.hardcore ? 'border-danger' : ''
-                return `hero-${this.hero.classSlug} ${gender} ${hardcore}`
-            }
-        }
-    }
+    })
+    
+    const heroClassImg = computed(() => {
+        const gender = props.hero.gender === 1 ? 'female' : 'male'
+        const hardcore = props.hero.hardcore ? 'border-danger' : ''
+        return `hero-${props.hero.classSlug} ${gender} ${hardcore}`
+    })
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .hero-ico
     vertical-align middle
 
