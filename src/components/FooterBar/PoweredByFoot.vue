@@ -12,14 +12,11 @@
   </div>
 </template>
 
-<script>
-    export default {
-        name: 'PoweredByFoot',
-        props: {
-            icons: {
+<script setup>
+  const props = defineProps({
+    icons: {
                 required: true,
                 type: Array
             }
-        }
-    }
+  })
 </script>

@@ -12,17 +12,12 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'HeaderBar',
-        data () {
-            return {
-                // 🔥 Note that only variables that start with VUE_APP_ will be statically embedded
-                // into the client bundle with webpack.DefinePlugin.
-                // Recuperamos la variable de entorno y la guardamos en 'title'
-                // title: process.env.VUE_APP_TITLE
-                title: import.meta.env.VITE_TITLE
-            }
-        }
-    }
+<script setup>
+    import { ref } from 'vue';
+
+    // 🔥 Note that only variables that start with VUE_APP_ will be statically embedded
+    // into the client bundle with webpack.DefinePlugin.
+    // Recuperamos la variable de entorno y la guardamos en 'title'
+    // title: process.env.VUE_APP_TITLE
+    const title =  ref(import.meta.env.VITE_TITLE)
 </script>

@@ -16,47 +16,39 @@
     </footer>
 </template>
 
-<script>
+<script setup>
+    import { reactive } from 'vue';
+
     import MadeByFoot from './MadeByFoot.vue'
     import PoweredByFoot from './PoweredByFoot.vue'
     import FootLinks from './FootLinks.vue'
-
-    export default {
-        name: 'FooterBar',
-        components: {
-            FootLinks,
-            PoweredByFoot,
-            MadeByFoot,
+    
+    const icons = reactive([
+        {
+            classes: [ 'fab', 'vuejs' ],
+            color: '#4fc08d',
+            href: 'https://vue.js.org/'
         },
-        data () {
-            return {
-                icons: [
-                    {
-                    classes: [ 'fab', 'vuejs' ],
-                    color: '#4fc08d',
-                    href: 'https://vue.js.org/'
-                    },
-                    {
-                    classes: [ 'fab', 'bootstrap' ],
-                    color: '#7952b3',
-                    href: 'https://bootstrap-vue.js.org/'
-                    },
-                    {
-                    classes: [ 'fab', 'battle-net' ],
-                    href: 'https://develop.battle.net/documentation/diablo-3/community-apis'
-                    },
-                    {
-                    classes: [ 'fab', 'github' ],
-                    color: '#e4e4e4',
-                    href: 'https://github.com/carlosmperilla'
-                    },
-                    {
-                    classes: [ 'fab', 'font-awesome' ],
-                    color: '#0e95ff',
-                    href: 'https://fontawesome.com/'
-                    }
-                ]
-            }
+        {
+            classes: [ 'fab', 'bootstrap' ],
+            color: '#7952b3',
+            href: 'https://bootstrap-vue.js.org/'
+        },
+        {
+            classes: [ 'fab', 'battle-net' ],
+            href: 'https://develop.battle.net/documentation/diablo-3/community-apis'
+        },
+        {
+            classes: [ 'fab', 'github' ],
+            color: '#e4e4e4',
+            href: 'https://github.com/carlosmperilla'
+        },
+        {
+            classes: [ 'fab', 'font-awesome' ],
+            color: '#0e95ff',
+            href: 'https://fontawesome.com/'
         }
-    }
+    ])
 </script>
+
+

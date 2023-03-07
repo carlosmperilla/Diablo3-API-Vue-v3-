@@ -51,7 +51,7 @@
     }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     .spinner-wrapper
         .spinner
             width 4rem
