@@ -21,18 +21,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-
-const app = createApp({
-    extends: App,
-    methods: {
-        init () {
-            store.dispatch('oauth/getToken', null, { root: true })
-        }
-    },
-    created() {
-        this.init()
-    },
-})
+const app = createApp(App)
 
 app.config.devtools = true // Para vue devtools
 

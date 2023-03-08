@@ -47,33 +47,6 @@
     </div>
 </template>
 
-<!-- <script>
-    import { regions } from '@/utils/regions'
-
-    export default {
-    name: 'MainForm',
-    data () {
-        return {
-        form: {
-            battleTag: '',
-            region: 'eu'
-        }
-        }
-    },
-    computed: {
-        regions () {
-        return regions.map(region => ({ value: region, text: region.toUpperCase() }))
-        }
-    },
-    methods: {
-        onSubmit () {
-        const { region, battleTag } = this.form
-        this.$router.push({ name: 'Profile', params: { region, battleTag: battleTag.replace('#', '-') } })
-        }
-    }
-    }
-</script> -->
-
 <script setup>
     import { reactive, computed } from 'vue';
     import { useRouter } from 'vue-router'

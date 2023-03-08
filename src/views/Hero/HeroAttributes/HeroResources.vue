@@ -44,33 +44,6 @@
   </div>
 </template>
 
-<!-- <script>
-    import resources from '@/mixins/resources'
-
-    export default {
-        name: 'HeroResources',
-        mixins: [resources],
-        props: {
-            resources: {
-                required: true,
-                type: Object
-            }
-        },
-        computed: {
-            classResourceName () {
-                return `resource-${this.resourceClassName(this.resources.classSlug)}`
-            },
-            displayResourceName () {
-                return this.resourceDisplayName(this.resources.classSlug)
-            },
-            // Solo demon-hunter tiene recurso secundario
-            hasSecondaryResource () {
-                return this.resources.classSlug === 'demon-hunter'
-            }
-        }
-    }
-</script> -->
-
 <script setup>
   import { computed } from 'vue'
 

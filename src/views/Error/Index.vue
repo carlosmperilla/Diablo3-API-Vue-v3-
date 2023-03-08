@@ -44,26 +44,22 @@
   </div>
 </template>
 
-<script>
-    // Pendiente Composition API
-    // Problablemente sea mejor hacerlo despues de 
-    // pasar de Vuex a Pinia
-    import { mapState } from 'vuex'
-    import setError from '@/mixins/setError'
+<script setup>
+    // Pendiente Pinia
+    import { computed } from 'vue'
+    import { onBeforeRouteLeave } from 'vue-router'
+    import { useStore } from 'vuex'
 
-    export default {
-        name: 'ErrorView',
-        mixins: [setError],
-        computed: {
-            ...mapState('error', {
-                err: 'error'
-            })
-        },
-        // Este 'guardia de ruta' es invocado justo antes de cambiar de página
-        // Es perfecto para limpiar el mensaje de error a través del mixin y liberar memoria
-        beforeRouteLeave (to, from, next) {
-            this.setApiErr(null)
-            next()
-        }
-    }
+    import handlerSetApiErr from '@/reusable/setError'
+  
+    const store = useStore()
+    const err = computed(() => store.state.error.error)
+    const setApiErr = handlerSetApiErr()
+
+    // Este 'guardia de ruta' es invocado justo antes de cambiar de página
+    // Es perfecto para limpiar el mensaje de error a través del mixin y liberar memoria
+    onBeforeRouteLeave((to, from, next) => {
+        setApiErr(null)
+        next()
+    })
 </script>

@@ -1,177 +1,82 @@
 <template>
     <div>
       <BaseLoading v-if="isLoading"/>
-      <template v-if="profileData !== null">
+
+      <template v-if="isFillProfileData">
         <MainBlock :profile-data="profileData"/>
         <ArtisansBlock :artisans-data="artisansData"/>
       </template>
+
     </div>
 </template>
   
-<!-- <script>
-    import setError from '@/mixins/setError'
+<script setup>
+    // Pendiente Pinia
+    import { ref, reactive, computed } from 'vue'
+    import { useRoute, useRouter } from 'vue-router'
+
+    import handlerSetApiErr from '@/reusable/setError'
     import { getApiAccount } from '@/api/search'
     
     import BaseLoading from '@/components/BaseLoading.vue'
     import MainBlock from './MainBlock/Index.vue'
     import ArtisansBlock from './ArtisansBlock/Index.vue'
 
-    export default {
-        name: 'ProfileView',
-        // Lo damos de alta
-        mixins: [
-            setError,
-        ],
-        components: {
-            BaseLoading,
-            MainBlock,
-            ArtisansBlock,
-        },
-        data () {
-            return {
-                isLoading: false,
-                profileData: null
-            }
-        },
-        created () {
-            this.isLoading = true
-            // Para usar battleTag:
-            // https://us.diablo3.blizzard.com/es-mx/rankings/era/18/rift-barbarian
-            const { region, battleTag: account } = this.$route.params
-            // Llamada a la API
-            this.fetchData(region, account)
-        },
-        methods: {
-            /**
-             * Obtener los datos de la API
-             * Guardarlos en 'profileData'
-             */
-            fetchData (region, account) {
-                // Llamada a la API con los datos necesarios
-                getApiAccount({ region, account })
-                    .then(({ data }) => {
-                        // Guardamos los datos en una variable local
-                        this.profileData = data
-                    })
-                    .catch((err) => {
-                        this.profileData = null
-                        // Creamos el objeto error
-                        const errObj = {
-                            routeParams: this.$route.params,
-                            message: err.message
-                        }
-                        if (err.response) {
-                            errObj.data = err.response.data
-                            errObj.status = err.response.status
-                        }
-                        // Hacemos uso del Mixin
-                        // Guardamos el objeto en el Store
-                        this.setApiErr(errObj)
-                        // Navegamos a la ruta de nombre 'Error'
-                        this.$router.push({ name: 'Error' })
-                    })
-                    .finally(() => {
-                        this.isLoading = false
-                    })
-            }
-        },
-        computed: {
-            artisansData () {
-                return {
-                    blacksmith: this.profileData.blacksmith,
-                    blacksmithHardcore: this.profileData.blacksmithHardcore,
-                    jeweler: this.profileData.jeweler,
-                    jewelerHardcore: this.profileData.jewelerHardcore,
-                    mystic: this.profileData.mystic,
-                    mysticHardcore: this.profileData.mysticHardcore
-                }
-        }
-}
-    }
-</script> -->
+    const setApiErr = handlerSetApiErr()
+    const route = useRoute()
+    const router = useRouter()
 
-<script>
-    // Pendiente Composition API
-    // Problablemente sea mejor hacerlo despues de 
-    // pasar de Vuex a Pinia
-    // En este caso el Vuex esta en setError
-    import setError from '@/mixins/setError'
-    import { getApiAccount } from '@/api/search'
-    
-    import BaseLoading from '@/components/BaseLoading.vue'
-    import MainBlock from './MainBlock/Index.vue'
-    import ArtisansBlock from './ArtisansBlock/Index.vue'
+    const isLoading = ref(true)
+    const profileData = reactive({})
+    // Para usar battleTag:
+    // https://us.diablo3.blizzard.com/es-mx/rankings/era/18/rift-barbarian
+    const { region, battleTag: account } = route.params
 
-    export default {
-        name: 'ProfileView',
-        // Lo damos de alta
-        mixins: [
-            setError,
-        ],
-        components: {
-            BaseLoading,
-            MainBlock,
-            ArtisansBlock,
-        },
-        data () {
-            return {
-                isLoading: false,
-                profileData: null
-            }
-        },
-        created () {
-            this.isLoading = true
-            // Para usar battleTag:
-            // https://us.diablo3.blizzard.com/es-mx/rankings/era/18/rift-barbarian
-            const { region, battleTag: account } = this.$route.params
-            // Llamada a la API
-            this.fetchData(region, account)
-        },
-        methods: {
-            /**
-             * Obtener los datos de la API
-             * Guardarlos en 'profileData'
-             */
-            fetchData (region, account) {
-                // Llamada a la API con los datos necesarios
-                getApiAccount({ region, account })
-                    .then(({ data }) => {
-                        // Guardamos los datos en una variable local
-                        this.profileData = data
-                    })
-                    .catch((err) => {
-                        this.profileData = null
-                        // Creamos el objeto error
-                        const errObj = {
-                            routeParams: this.$route.params,
-                            message: err.message
-                        }
-                        if (err.response) {
-                            errObj.data = err.response.data
-                            errObj.status = err.response.status
-                        }
-                        // Hacemos uso del Mixin
-                        // Guardamos el objeto en el Store
-                        this.setApiErr(errObj)
-                        // Navegamos a la ruta de nombre 'Error'
-                        this.$router.push({ name: 'Error' })
-                    })
-                    .finally(() => {
-                        this.isLoading = false
-                    })
-            }
-        },
-        computed: {
-            artisansData () {
-                return {
-                    blacksmith: this.profileData.blacksmith,
-                    blacksmithHardcore: this.profileData.blacksmithHardcore,
-                    jeweler: this.profileData.jeweler,
-                    jewelerHardcore: this.profileData.jewelerHardcore,
-                    mystic: this.profileData.mystic,
-                    mysticHardcore: this.profileData.mysticHardcore
+    /**
+     * Obtener los datos de la API
+     * Guardarlos en 'profileData'
+     */
+    function fetchData (region, account) {
+        // Llamada a la API con los datos necesarios
+        getApiAccount({ region, account })
+            .then(({ data }) => {
+                Object.assign(profileData, data)
+            })
+            .catch((err) => {
+                // Creamos el objeto error
+                const errObj = {
+                    routeParams: route.params,
+                    message: err.message
                 }
-        }
-}
+                if (err.response) {
+                    errObj.data = err.response.data
+                    errObj.status = err.response.status
+                }
+                // Hacemos uso del Mixin
+                // Guardamos el objeto en el Store
+                setApiErr(errObj)
+                // Navegamos a la ruta de nombre 'Error'
+                router.push({ name: 'Error' })
+            })
+            .finally(() => {
+                isLoading.value = false
+            })
     }
+
+    // Llamada a la API
+    fetchData(region, account)
+
+    const artisansData = computed(() => {
+        return {
+            blacksmith: profileData.blacksmith,
+            blacksmithHardcore: profileData.blacksmithHardcore,
+            jeweler: profileData.jeweler,
+            jewelerHardcore: profileData.jewelerHardcore,
+            mystic: profileData.mystic,
+            mysticHardcore: profileData.mysticHardcore
+        }
+    })
+
+    // Para verificar si ya se llenaron los datos
+    const isFillProfileData = computed(() => Object.keys(profileData).length !== 0)
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="hero-view">
         <BaseLoading v-if="isLoadingHero"/>
-        <HeroDetailHeader v-if="hero" :detail="detailHeader"/>
+        <HeroDetailHeader v-if="isFillHero" :detail="detailHeader"/>
         
     <b-row>
       <!-- 12 columnas de 'xs' -> 'md', 8 columnas desde 'lg' hacia arriba  -->
@@ -9,13 +9,13 @@
       <b-col md='12' lg='8' order-lg='2'>
         <BaseLoading v-if='isLoadingItems'/>
         <!-- Componente de Items del personaje -->
-        <HeroItem v-if="items" :items="items"/>
+        <HeroItem v-if="isFillItems" :items="items"/>
       </b-col>
 
       <!-- 12 columnas de 'xs' -> 'md', 4 columnas desde 'lg' hacia arriba -->
       <!-- En 'lg' orden 1 -->
       <b-col md='12' lg='4' order-lg='1'>
-        <template v-if='hero'>
+        <template v-if='isFillHero'>
           <HeroAttributes :attributes='detailStats'/>
           <HeroSkills :skills='hero.skills'/>
         </template>
@@ -24,13 +24,13 @@
     </b-row>
     </div>
 </template>
-  
-<script>
-    // Pendiente Composition API
-    // Problablemente sea mejor hacerlo despues de 
-    // pasar de Vuex a Pinia
-    // setError
-    import setError from '@/mixins/setError'
+
+<script setup>
+    // Pendiente Pinia
+    import { ref, reactive, computed } from 'vue'
+    import { useRoute, useRouter } from 'vue-router'
+
+    import handlerSetApiErr from '@/reusable/setError'
     import { getApiHero, getApiDetailedHeroItems } from '@/api/search'
     
     import BaseLoading from '@/components/BaseLoading.vue'
@@ -39,94 +39,85 @@
     import HeroSkills from './HeroSkills/Index.vue'
     import HeroItem from './HeroItems/Index.vue'
 
-    export default {
-        name: 'HeroView',
-        mixins: [setError],
-        components: { 
-            BaseLoading,
-            HeroDetailHeader,
-            HeroAttributes,
-            HeroSkills,
-            HeroItem,
-        },
-        data () {
-            return {
-                isLoadingHero: false,
-                isLoadingItems: false,
-                hero: null,
-                items: null,
+    const setApiErr = handlerSetApiErr()
+    const route = useRoute()
+    const router = useRouter()
+
+    const isLoadingHero = ref(true)
+    const isLoadingItems = ref(true)
+    
+    const hero = reactive({})
+    const items = reactive({})
+    
+    const { region, battleTag: account, heroId } = route.params
+
+    getApiHero({ region, account, heroId })
+        .then(({ data }) => {
+            Object.assign(hero, data)
+        })
+        .catch((err) => {
+            const errObj = {
+                routeParams: route.params,
+                message: err.message
             }
-        },
-        computed: {
-            detailHeader () {
-                // Asignamos valores a través de 
-                const {
-                    name,
-                    // valor: alias
-                    class: classSlug,
-                    gender,
-                    level,
-                    hardcore,
-                    seasonal,
-                    paragonLevel,
-                    alive,
-                    seasonCreated
-                } = this.hero
-
-                return {
-                    name,
-                    classSlug,
-                    gender,
-                    level,
-                    hardcore,
-                    seasonal,
-                    paragonLevel,
-                    alive,
-                    seasonCreated
-                }
-            },
-            detailStats () {
-                // Devuelve el contenido de stats y agrega classSlug
-                return { ...this.hero.stats, classSlug: this.hero.class }
+            if (err.response) {
+                errObj.data = err.response.data
+                errObj.status = err.response.status
             }
-        },
-        created () {
-            this.isLoadingHero = true
-            this.isLoadingItems = true
-            const { region, battleTag: account, heroId } = this.$route.params
+            setApiErr(errObj)
+            router.push({ name: 'Error' })
+        })
+        .finally(() => {
+            isLoadingHero.value = false
+        })
 
-            getApiHero({ region, account, heroId })
-                .then(({ data }) => {
-                    this.hero = data
-                })
-                .catch((err) => {
-                    this.hero = null
-                    this.errObj = {
-                        routeParams: this.$route.params,
-                        message: err.message
-                    }
-                    if (err.response) {
-                        arrObj.data = err.response.data
-                        arrObj.status = err.response.status
-                    }
-                    this.setApiErr(errObj)
-                    this.$router.push({ name: 'Error' })
-                })
-                .finally(() => {
-                    this.isLoadingHero = false
-                })
+    getApiDetailedHeroItems({ region, account, heroId })
+        .then(({ data }) => {
+            Object.assign(items, data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .finally(() => {
+            isLoadingItems.value = false
+        })
 
-            getApiDetailedHeroItems({ region, account, heroId })
-                .then(({ data }) => {
-                    this.items = data
-                })
-                .catch((err) => {
-                    this.items = null
-                    console.log(err)
-                })
-                .finally(() => {
-                    this.isLoadingItems = false
-                })
+
+    const detailHeader = computed(() => {
+        // Asignamos valores a través de 
+        const {
+            name,
+            // valor: alias
+            class: classSlug,
+            gender,
+            level,
+            hardcore,
+            seasonal,
+            paragonLevel,
+            alive,
+            seasonCreated
+        } = hero
+
+        return {
+            name,
+            classSlug,
+            gender,
+            level,
+            hardcore,
+            seasonal,
+            paragonLevel,
+            alive,
+            seasonCreated
         }
-    }
+    })
+
+    const detailStats = computed(() => {
+        // Devuelve el contenido de stats y agrega classSlug
+        return { ...hero.stats, classSlug: hero.class }
+    })
+
+    // Para verificar si ya se llenaron los datos
+    const isFillHero = computed(() => Object.keys(hero).length !== 0)
+    const isFillItems = computed(() => Object.keys(items).length !== 0)
+
 </script>

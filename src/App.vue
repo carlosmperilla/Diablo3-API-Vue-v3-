@@ -4,35 +4,28 @@
     <LoadLayout v-if="isLoading">
       <BaseLoading/>
     </LoadLayout>
-
+    
     <MainLayout v-else/>
+
   </div>
 </template>
 
-<script>
-  // Pendiente Composition API
-  // Problablemente sea mejor hacerlo despues de 
-  // pasar de Vuex a Pinia
-  import { mapState }  from 'vuex'
+<script setup>
+  // Pendiente Pinia
+  import { computed } from 'vue'
+  import { useStore } from 'vuex'
 
   import LoadLayout from './layouts/LoadLayout.vue'
   import MainLayout from './layouts/MainLayout.vue'
   import BaseLoading from '@/components/BaseLoading.vue'
 
-  export default {
-    name: 'App',
-    components: {
-      MainLayout,
-      LoadLayout,
-      BaseLoading,
-    },
-    computed: {
-      // Uso: mapState(moduleName, { state })
-      ...mapState('loading', {
-        isLoading: 'isLoading'
-      })
-    }
-  }
+  const store = useStore()
+  const isLoading = computed(() => store.state.loading.isLoading)
+  
+  // Obtenemos el token para las consultas
+  // Recordemos, usamos root true para disparar la mutación o acción
+  // globalmente
+  store.dispatch('oauth/getToken', null, { root: true })
 </script>
 
 <style lang="stylus">
