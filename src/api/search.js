@@ -3,9 +3,11 @@
 import axios from 'axios';
 const get = axios.get;
 // Store, donce tenemos almacenado nuestro token
-import store from '../store/index'
+import { useOauthStore } from '@/stores/oauth'
 // Útil de regiones, que nos devolverá el 'locale' por defecto correspondiente a cada región
 import { locales } from '../utils/regions'
+
+const oauthStore = useOauthStore()
 
 // API URL
 // https://{region}.api.blizzard.com, donde {region} puede ser 'us', 'eu', 'kr' o 'tw'
@@ -33,7 +35,7 @@ function getApiAccount ({ region, account }) {
     // - Token de acceso (recuperado desde Vuex)
     // - Locale
     const params = {
-      access_token: store.state.oauth.accessToken,
+      access_token: oauthStore.accessToken,
       locale
     }
   
@@ -56,7 +58,7 @@ function getApiHero ({ region, account, heroId }) {
   const locale = locales[region]
 
   const params = {
-    'access_token': store.state.oauth.accessToken,
+    'access_token': oauthStore.accessToken,
     locale
   }
 
@@ -77,7 +79,7 @@ function getApiDetailedHeroItems ({ region, account, heroId }) {
   const locale = locales[region]
 
   const params = {
-    access_token: store.state.oauth.accessToken,
+    access_token: oauthStore.accessToken,
     locale
   }
 

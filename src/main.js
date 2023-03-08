@@ -17,10 +17,11 @@ import { formatNumber } from '@/filters/numeral'
 import './directives'
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 
+const pinia = createPinia()
 const app = createApp(App)
 
 app.config.devtools = true // Para vue devtools
@@ -32,6 +33,6 @@ app.config.globalProperties.$filters = {
 }
 
 app
-    .use(store)
+    .use(pinia)
     .use(router)
     .mount('#app')

@@ -1,13 +1,14 @@
-import { useStore } from 'vuex'
+import { useErrorStore } from '@/stores/error'
+
 
 export default function handlerSetApiErr(){
-  const store = useStore()
+  const store = useErrorStore()
   /**
   * API response error.
   * @param params {Object || null} Error Object
   */
   const setApiErr = (params) => {
-    store.commit('error/SET_ERROR', params)
+    store.setError(params)
   }
   return setApiErr
 }

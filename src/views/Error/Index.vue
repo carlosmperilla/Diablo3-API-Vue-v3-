@@ -2,7 +2,7 @@
   <div class='error-page m-5'>
     <hr class='my-5'>
     <!-- Si hay error -->
-    <div v-if='err'>
+    <div v-if='hasErr'>
 
       <!-- Si hay codigo de error -->
       <h1 class='my-5'>Error <span v-if='err.status'>{{ err.status }}</span></h1>
@@ -45,15 +45,17 @@
 </template>
 
 <script setup>
-    // Pendiente Pinia
     import { computed } from 'vue'
     import { onBeforeRouteLeave } from 'vue-router'
-    import { useStore } from 'vuex'
-
+    
+    import { useErrorStore  } from '@/stores/error'
     import handlerSetApiErr from '@/reusable/setError'
   
-    const store = useStore()
-    const err = computed(() => store.state.error.error)
+    const errorStore = useErrorStore()
+    
+    const err = computed(() => errorStore.error)
+    const hasErr = computed(() => Object.keys(errorStore.error).length !== 0)
+    
     const setApiErr = handlerSetApiErr()
 
     // Este 'guardia de ruta' es invocado justo antes de cambiar de página

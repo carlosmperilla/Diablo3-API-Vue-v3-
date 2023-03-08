@@ -11,21 +11,21 @@
 </template>
 
 <script setup>
-  // Pendiente Pinia
   import { computed } from 'vue'
-  import { useStore } from 'vuex'
+
+  import { useLoadingStore } from './stores/loading'
+  import { useOauthStore } from './stores/oauth'
 
   import LoadLayout from './layouts/LoadLayout.vue'
   import MainLayout from './layouts/MainLayout.vue'
   import BaseLoading from '@/components/BaseLoading.vue'
 
-  const store = useStore()
-  const isLoading = computed(() => store.state.loading.isLoading)
+  const loadingStore = useLoadingStore()
+  const oauthStore = useOauthStore()
+
+  const isLoading = computed(() => loadingStore.isLoading)
   
-  // Obtenemos el token para las consultas
-  // Recordemos, usamos root true para disparar la mutación o acción
-  // globalmente
-  store.dispatch('oauth/getToken', null, { root: true })
+  oauthStore.getToken()
 </script>
 
 <style lang="stylus">

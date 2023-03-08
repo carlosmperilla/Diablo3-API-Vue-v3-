@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-    // Pendiente Pinia
     import { ref, reactive, computed } from 'vue'
     import { useRoute, useRouter } from 'vue-router'
 
